@@ -4,33 +4,21 @@ using UnityEngine;
 
 public class DustTrail : MonoBehaviour
 {
-    [SerializeField] ParticleSystem snowParticles;
+    [SerializeField] ParticleSystem snow;
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
-            snowParticles.Pause();
+            snow.Play();
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
-            snowParticles.Play();
+            snow.Stop();
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

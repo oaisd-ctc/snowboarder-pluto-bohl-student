@@ -5,15 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class CrashDetector : MonoBehaviour
 {
-    [SerializeField] float timeToReload = 0.5f;
+    [SerializeField] float timeToReload = 2f;
     [SerializeField] ParticleSystem dead;
+    [SerializeField] AudioClip crashSFX;
+    public bool isDead;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Ground")
+        if (collision.tag == "Ground" && !isDead)
         {
+            FindObjectOfType<PlayerController>().DisableControls();
             Debug.Log("You Died.");
             dead.Play();
+            GetComponent<AudioSource>().PlayOneShot(crashSFX);
             Invoke("ReloadScene", timeToReload);
+            isDead = true;
         }
     }
 
